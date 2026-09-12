@@ -1,0 +1,8 @@
+{
+  "characters": {
+    "narrator": {"name": "旁白", "aliases": [], "voice": "narrator", "confirmed": true}
+  },
+  "voices": {
+    "narrator": {"backend": "tone"}
+  }
+}

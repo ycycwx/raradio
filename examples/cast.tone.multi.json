@@ -1,0 +1,12 @@
+{
+  "characters": {
+    "narrator": {"name": "旁白", "aliases": [], "voice": "narrator", "confirmed": true},
+    "xiaoyu": {"name": "小雨", "aliases": ["雨雨"], "voice": "xiaoyu", "confirmed": true},
+    "linzhou": {"name": "林舟", "aliases": ["阿舟"], "voice": "linzhou", "confirmed": true}
+  },
+  "voices": {
+    "narrator": {"backend": "tone", "speed": 1.0},
+    "xiaoyu": {"backend": "tone", "speed": 1.0},
+    "linzhou": {"backend": "tone", "speed": 1.0}
+  }
+}

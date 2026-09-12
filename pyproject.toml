@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "raradio"
+dynamic = ["version"]
+description = "Headless CLI for resumable local audiobook production and explicit cast review"
+readme = "README.md"
+authors = [{ name = "ycycwx" }]
+keywords = ["audiobook", "text-to-speech", "tts", "cli", "local-ai"]
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY.md", "THIRD_PARTY.zh-CN.md"]
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: POSIX",
+  "Operating System :: MacOS :: MacOS X",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+
+[project.urls]
+Homepage = "https://github.com/ycycwx/raradio"
+Repository = "https://github.com/ycycwx/raradio"
+Issues = "https://github.com/ycycwx/raradio/issues"
+Changelog = "https://github.com/ycycwx/raradio/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+mlx = ["mlx-audio[tts]==0.5.3; sys_platform == 'darwin' and platform_machine == 'arm64'"]
+
+[project.scripts]
+raradio = "raradio.cli:main"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.package-data]
+raradio = ["skills/raradio-audiobook/SKILL.md"]
+
+[tool.setuptools.dynamic]
+version = {attr = "raradio.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["raradio", "raradio.*"]
+
+[tool.uv]
+cache-keys = [{file = "pyproject.toml"}, {file = "raradio/__init__.py"}]

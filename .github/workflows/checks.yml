@@ -1,0 +1,65 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      check_mlx:
+        description: Install locked MLX packages on Apple Silicon (no model download)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: Core (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.11", "3.12", "3.13", "3.14"]
+    env:
+      UV_PYTHON: ${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: "0.12.13"
+      - name: Install core from the committed lockfile
+        run: |
+          uv lock --check
+          sh setup.sh core
+          uv pip check
+      - name: Standard-library tests (no models or optional dependencies)
+        run: .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
+      - name: Shell syntax
+        run: sh -n setup.sh run.sh
+
+  mlx-install:
+    name: Optional MLX package installation (no models)
+    if: github.event_name == 'workflow_dispatch' && inputs.check_mlx
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: "0.12.13"
+          python-version: "3.11"
+      - name: Install optional packages and check dependency consistency
+        run: |
+          sh setup.sh mlx
+          uv pip check
+      # Hosted VMs are not a substitute for a real Metal/model/voice-quality test.

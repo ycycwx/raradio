@@ -1,0 +1,15 @@
+{
+  "characters": {
+    "narrator": {"name": "朗读者", "aliases": [], "voice": "narrator", "confirmed": true}
+  },
+  "voices": {
+    "narrator": {
+      "backend": "mlx",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+      "speaker": "Serena",
+      "language": "Chinese",
+      "instruct": "自然朗读，清晰、平稳，保留句子的停顿。",
+      "seed": 42
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "characters": {
+    "narrator": {"name": "旁白", "aliases": [], "voice": "narrator", "confirmed": true},
+    "xiaoyu": {"name": "小雨", "aliases": [], "voice": "xiaoyu", "confirmed": true},
+    "linzhou": {"name": "林舟", "aliases": [], "voice": "linzhou", "confirmed": true}
+  },
+  "voices": {
+    "narrator": {
+      "backend": "mlx",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+      "speaker": "Serena",
+      "instruct": "自然朗读，旁白平稳、清晰，不要夸张。",
+      "seed": 42
+    },
+    "xiaoyu": {
+      "backend": "mlx",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+      "reference_audio": "reference.wav",
+      "clone_mode": "xvector",
+      "emotion_mode": "reference",
+      "language": "Chinese",
+      "seed": 43
+    },
+    "linzhou": {
+      "backend": "mlx",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+      "speaker": "Ryan",
+      "instruct": "自然地说话，温和、放松。",
+      "seed": 44
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "characters": {
+    "narrator": {"name": "朗读者", "aliases": [], "voice": "cloned", "confirmed": true}
+  },
+  "voices": {
+    "cloned": {
+      "backend": "mlx",
+      "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+      "reference_audio": "reference.wav",
+      "reference_text": "请替换为参考音频中实际说出的全部文字。",
+      "clone_mode": "icl",
+      "emotion_mode": "reference",
+      "language": "Chinese",
+      "seed": 42
+    }
+  }
+}
