@@ -34,7 +34,7 @@ Issues = "https://github.com/ycycwx/raradio/issues"
 Changelog = "https://github.com/ycycwx/raradio/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-mlx = ["mlx-audio[tts]==0.5.3; sys_platform == 'darwin' and platform_machine == 'arm64'"]
+mlx = ["mlx-audio[tts]==0.5.4; sys_platform == 'darwin' and platform_machine == 'arm64'"]
 
 [project.scripts]
 raradio = "raradio.cli:main"
