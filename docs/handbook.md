@@ -82,7 +82,7 @@ sh setup.sh mlx
 sh run.sh setup
 ```
 
-The script installs from `uv.lock`; MLX-Audio is currently pinned to 0.5.3. Installing `mlx` dependencies and downloading TTS models are separate steps: the Hugging Face models in the examples are usually downloaded on the first synthesis call, with existing caches reused. The first run takes longer than later runs, so do not estimate whole-book speed from the first run's total time alone.
+The script installs from `uv.lock`; the MLX-Audio version is pinned in `pyproject.toml`. Installing `mlx` dependencies and downloading TTS models are separate steps: the Hugging Face models in the examples are usually downloaded on the first synthesis call, with existing caches reused. The first run takes longer than later runs, so do not estimate whole-book speed from the first run's total time alone.
 
 ### Identify characters automatically: also prepare Ollama
 

@@ -20,7 +20,7 @@ raradio is currently distributed as a GitHub source checkout. It has a small sta
 ## Installation contract
 
 - Core has no third-party Python runtime dependencies. It needs Python 3.11+ and POSIX locking (`fcntl`); native Windows is not supported.
-- Real speech uses `mlx-audio[tts]==0.5.3` on native Apple Silicon macOS. The locked environment requires macOS 14 or newer and recommends Python 3.11.
+- Real speech uses the `mlx-audio[tts]` version pinned in `pyproject.toml` and resolved in `uv.lock` on native Apple Silicon macOS. The locked environment requires macOS 14 or newer and recommends Python 3.11.
 - `sh setup.sh mlx` checks the platform before resolving packages and installs the locked environment. `sh setup.sh core` prepares only the model-free workflow.
 - Model weights are separate downloads and are not stored in the repository or lockfile. GPU/Metal access and sufficient memory still matter after dependency installation.
 - Ollama is optional and only used when selected for analysis. FFmpeg is optional for the existing PCM16 mono WAV workflow.
@@ -38,7 +38,7 @@ sh setup.sh core
 .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
 ```
 
-To change the pinned `mlx-audio` version, first update `pyproject.toml`, then regenerate the lock. Review the adapter, upstream compatibility, and licenses. For speech changes, also run `sh setup.sh mlx`, `uv pip check`, and the short real-model checks in [verification](verification.md).
+To change the pinned `mlx-audio` version, first update `pyproject.toml`, then regenerate the lock and update the expected version and diagnostic hint in `raradio/cli.py`. The model-free CLI tests check that `doctor` accepts the version declared in `pyproject.toml`. Review the adapter, upstream compatibility, and licenses. For speech changes, also run `sh setup.sh mlx`, `uv pip check`, and the short real-model checks in [verification](verification.md).
 
 Dependabot proposes monthly updates for GitHub Actions and the uv ecosystem; it does not merge changes or publish anything automatically.
 

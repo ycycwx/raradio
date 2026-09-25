@@ -14,7 +14,7 @@
 
 | 项目 | 用途 | 上游许可依据 |
 | --- | --- | --- |
-| MLX-Audio 0.5.3 | 可选 TTS Python 依赖 | [MIT](https://github.com/Blaizzy/mlx-audio/blob/main/LICENSE) |
+| MLX-Audio（版本固定在 `pyproject.toml` 中） | 可选 TTS Python 依赖 | [MIT](https://github.com/Blaizzy/mlx-audio/blob/main/LICENSE) |
 | MLX / MLX Metal | Apple Silicon 推理运行库 | [MIT](https://github.com/ml-explore/mlx/blob/main/LICENSE) |
 | Ollama | 外部文本推理服务 | [MIT](https://github.com/ollama/ollama/blob/main/LICENSE) |
 | Qwen3-14B | 默认文本模型家族 | [Apache-2.0 模型卡](https://huggingface.co/Qwen/Qwen3-14B)；实际安装的 Ollama 标签仍应记录版本与许可 |

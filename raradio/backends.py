@@ -93,7 +93,7 @@ class MlxBackend:
             # Retrying it in this process may abort, rather than raise Python errors.
             self._dependency_failure = (
                 f"MLX backend could not initialize: {error}. "
-                "Requires mlx-audio[tts]==0.5.3 and Apple Silicon with Metal GPU access. "
+                "Requires the pinned mlx-audio[tts] dependency and Apple Silicon with Metal GPU access. "
                 "If installed, check Metal availability and sandbox GPU permissions. "
                 "Restart the process after correcting the environment."
             )

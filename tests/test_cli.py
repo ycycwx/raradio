@@ -3,6 +3,7 @@ import io
 import subprocess
 import sys
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 from contextlib import redirect_stdout, redirect_stderr
@@ -25,6 +26,12 @@ class CliTests(unittest.TestCase):
 
     def cli(self, *arguments):
         return subprocess.run([sys.executable, "-m", "raradio", *map(str, arguments)], capture_output=True, text=True)
+
+    def pinned_mlx_audio_version(self):
+        metadata = tomllib.loads((Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8"))
+        requirement = next(item for item in metadata["project"]["optional-dependencies"]["mlx"]
+                           if item.startswith("mlx-audio[tts]=="))
+        return requirement.split("==", 1)[1].split(";", 1)[0].strip()
 
     def invoke_main(self, *arguments):
         from raradio.cli import main
@@ -67,12 +74,36 @@ class CliTests(unittest.TestCase):
 
     def test_mlx_doctor_rejects_unsupported_hardware_even_if_package_is_installed(self):
         with patch("raradio.cli.platform.system", return_value="Linux"), \
-             patch("raradio.cli.importlib.metadata.version", return_value="0.5.3"):
+             patch("raradio.cli.importlib.metadata.version", return_value=self.pinned_mlx_audio_version()):
             code, result, _ = self.invoke_main("doctor", "--profile", "mlx")
         self.assertEqual(code, 1)
         self.assertFalse(result["ready"])
         failures = [check for check in result["checks"] if not check["ok"]]
         self.assertIn("Apple Silicon", failures[0]["hint"])
+
+    def test_mlx_doctor_accepts_current_pinned_dependency(self):
+        with patch("raradio.cli.platform.system", return_value="Darwin"), \
+             patch("raradio.cli.platform.machine", return_value="arm64"), \
+             patch("raradio.cli.platform.mac_ver", return_value=("14.0", ("", "", ""), "")), \
+             patch("raradio.cli.importlib.metadata.version", return_value=self.pinned_mlx_audio_version()):
+            code, result, _ = self.invoke_main("doctor", "--profile", "mlx")
+        self.assertEqual(code, 0)
+        self.assertTrue(result["ready"])
+
+    def test_mlx_doctor_rejects_unpinned_dependency(self):
+        for version in ["0.0.0", "9999.0.0"]:
+            with self.subTest(version=version), \
+                 patch("raradio.cli.platform.system", return_value="Darwin"), \
+                 patch("raradio.cli.platform.machine", return_value="arm64"), \
+                 patch("raradio.cli.platform.mac_ver", return_value=("14.0", ("", "", ""), "")), \
+                 patch("raradio.cli.importlib.metadata.version", return_value=version):
+                code, result, _ = self.invoke_main("doctor", "--profile", "mlx")
+                self.assertEqual(code, 1)
+                self.assertFalse(result["ready"])
+                failures = [check for check in result["checks"] if not check["ok"]]
+                self.assertEqual([check["name"] for check in failures], ["mlx_audio"])
+                self.assertIn(self.pinned_mlx_audio_version(), failures[0]["hint"])
+                self.assertIn("setup.sh mlx", failures[0]["hint"])
 
     def test_mlx_doctor_missing_dependency_explains_install_and_scope(self):
         import importlib.metadata

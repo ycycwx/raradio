@@ -14,7 +14,7 @@ The project itself therefore uses MIT while preserving the original licenses of 
 
 | Project | Purpose | Upstream license source |
 | --- | --- | --- |
-| MLX-Audio 0.5.3 | Optional TTS Python dependency | [MIT](https://github.com/Blaizzy/mlx-audio/blob/main/LICENSE) |
+| MLX-Audio (version pinned in `pyproject.toml`) | Optional TTS Python dependency | [MIT](https://github.com/Blaizzy/mlx-audio/blob/main/LICENSE) |
 | MLX / MLX Metal | Apple Silicon inference runtime | [MIT](https://github.com/ml-explore/mlx/blob/main/LICENSE) |
 | Ollama | External text inference service | [MIT](https://github.com/ollama/ollama/blob/main/LICENSE) |
 | Qwen3-14B | Default text model family | [Apache-2.0 model card](https://huggingface.co/Qwen/Qwen3-14B); still record the version and license of the actual Ollama tag installed |

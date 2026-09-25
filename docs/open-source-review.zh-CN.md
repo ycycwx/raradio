@@ -34,7 +34,7 @@
 ## 依赖与兼容边界
 
 - 核心支持 Python 3.11+ 和提供 POSIX `fcntl` 的系统；macOS 有本地执行证据，Linux 已配置 CI，等待云端结果。Windows 原生不支持；可以查看帮助和版本不代表可操作项目。
-- 源码安装推荐 Python 3.11。当前人声仅支持 Qwen3-TTS Base/CustomVoice 经 MLX-Audio 0.5.3 在原生 Apple Silicon、macOS 14+ 且可访问 Metal 的环境运行；未接入 CPU、CUDA、Intel Mac 或 Linux 语音后端。
+- 源码安装推荐 Python 3.11。当前人声仅支持 Qwen3-TTS Base/CustomVoice 经锁定版本的 MLX-Audio 在原生 Apple Silicon、macOS 14+ 且可访问 Metal 的环境运行；未接入 CPU、CUDA、Intel Mac 或 Linux 语音后端。
 - `uv.lock` 固定解析出的 Python 包集合，不锁定 Python 本身、Ollama、模型权重、系统库、硬件或所有隔离构建工具。
 - `mlx` 可选依赖组带平台条件；`setup.sh mlx` 与 `doctor --profile mlx` 还会检查实际平台，避免把依赖解析结果误认为语音已受支持。
 - 模型可能在首次使用时下载。核心很小不代表完整语音环境也很小。需要以所选模型验证缓存、下载访问与可用内存；同名或同路径替换模型时，不会自动以权重内容重新计算缓存标识。

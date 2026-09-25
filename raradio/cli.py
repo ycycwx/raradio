@@ -120,11 +120,11 @@ def _doctor(profile="core", base_url="http://localhost:11434", model="qwen3:14b"
         check("mlx_platform", supported, f"{data['platform']} {macos} {data['architecture']}",
               "Use an Apple Silicon Mac with macOS 14 or later and Metal GPU access; core workflows also work on Linux.")
         mlx_hint = (
-            "From the raradio source checkout run `sh setup.sh mlx`. Expected mlx-audio 0.5.3."
+            "From the raradio source checkout run `sh setup.sh mlx`. Expected mlx-audio 0.5.6."
             if supported else
             "MLX speech is only supported on the platform described by the mlx_platform check."
         )
-        check("mlx_audio", data["mlx_audio"] == "0.5.3", data["mlx_audio"],
+        check("mlx_audio", data["mlx_audio"] == "0.5.6", data["mlx_audio"],
               mlx_hint)
     elif profile == "ollama":
         try:

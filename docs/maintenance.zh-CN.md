@@ -20,7 +20,7 @@ raradio 目前通过 GitHub 源码仓库分发，包含一个精简的标准库�
 ## 安装约定
 
 - 核心没有第三方 Python 运行依赖，需要 Python 3.11+ 与 POSIX 文件锁（`fcntl`）；原生 Windows 暂不支持。
-- 真实语音在原生 Apple Silicon macOS 上使用 `mlx-audio[tts]==0.5.3`。锁定环境要求 macOS 14 或更高，推荐 Python 3.11。
+- 真实语音在原生 Apple Silicon macOS 上使用 `pyproject.toml` 中固定、由 `uv.lock` 锁定的 `mlx-audio[tts]` 版本。锁定环境要求 macOS 14 或更高，推荐 Python 3.11。
 - `sh setup.sh mlx` 会先检查平台，再解析包并安装锁定环境；`sh setup.sh core` 只准备无模型流程。
 - 模型权重单独下载，不存入仓库或锁文件。依赖安装后仍需可用的 GPU/Metal 与足够内存。
 - Ollama 只有选择其分析器时才需要。当前 PCM16 单声道 WAV 流程不强制依赖 FFmpeg。
@@ -38,7 +38,7 @@ sh setup.sh core
 .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
 ```
 
-修改锁定的 `mlx-audio` 版本时，先更新 `pyproject.toml`，再重新生成锁文件，并复核适配器、上游兼容性和许可证。涉及语音的改动还需运行 `sh setup.sh mlx`、`uv pip check`，并按[测试与验证](verification.zh-CN.md)完成真实短样。
+修改锁定的 `mlx-audio` 版本时，先更新 `pyproject.toml`，再重新生成锁文件，并同步 `raradio/cli.py` 中的预期版本与诊断提示。无模型 CLI 测试会检查 `doctor` 是否接受 `pyproject.toml` 声明的版本。还需复核适配器、上游兼容性和许可证。涉及语音的改动还需运行 `sh setup.sh mlx`、`uv pip check`，并按[测试与验证](verification.zh-CN.md)完成真实短样。
 
 Dependabot 每月提出 GitHub Actions 与 uv 生态更新，不会自动合并或发布任何内容。
 

@@ -84,7 +84,7 @@ sh setup.sh mlx
 sh run.sh setup
 ```
 
-脚本依据 `uv.lock` 安装，当前 MLX-Audio 固定为 0.5.3。安装 `mlx` 依赖和下载 TTS 模型是两件事：示例中的 Hugging Face 模型通常在第一次合成时才下载，已有缓存会复用。首次运行比后续慢，不能只用第一次的总耗时估计整本速度。
+脚本依据 `uv.lock` 安装；MLX-Audio 的版本在 `pyproject.toml` 中固定。安装 `mlx` 依赖和下载 TTS 模型是两件事：示例中的 Hugging Face 模型通常在第一次合成时才下载，已有缓存会复用。首次运行比后续慢，不能只用第一次的总耗时估计整本速度。
 
 ### 要自动区分小说角色：再准备 Ollama
 

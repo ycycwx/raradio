@@ -34,7 +34,7 @@ Tests reproduce CLI failures and run the shell scripts; checking source text alo
 ## Dependency and compatibility boundaries
 
 - Core Python support is 3.11+ on systems providing POSIX `fcntl`; macOS has local execution evidence, while Linux has configured CI coverage awaiting hosted results. Native Windows is unsupported. `--help` and `--version` being usable there does not establish project support.
-- The source setup recommends Python 3.11. Current real speech is Qwen3-TTS Base/CustomVoice via MLX-Audio 0.5.3 on native Apple Silicon/macOS 14+ with Metal access. No CPU, CUDA, Intel Mac, or Linux speech backend is integrated.
+- The source setup recommends Python 3.11. Current real speech is Qwen3-TTS Base/CustomVoice via the pinned MLX-Audio dependency on native Apple Silicon/macOS 14+ with Metal access. No CPU, CUDA, Intel Mac, or Linux speech backend is integrated.
 - `uv.lock` fixes the resolved Python package set. It does not lock Python itself, Ollama, model weights, OS libraries, hardware, or all isolated build tools.
 - The `mlx` optional dependency group is platform-gated. `setup.sh mlx` and `doctor --profile mlx` also check the actual platform so a dependency-resolution result is not mistaken for speech support.
 - Models may download on first use. A small core does not imply a small complete speech installation. Cache/download access and free memory must be validated with the chosen models. Local-path or same-name model replacement is not automatically fingerprinted by its weight content.
