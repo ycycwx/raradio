@@ -38,7 +38,7 @@ sh setup.sh core
 .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
 ```
 
-To change the pinned `mlx-audio` version, first update `pyproject.toml`, then regenerate the lock and update the expected version and diagnostic hint in `raradio/cli.py`. The model-free CLI tests check that `doctor` accepts the version declared in `pyproject.toml`. Review the adapter, upstream compatibility, and licenses. For speech changes, also run `sh setup.sh mlx`, `uv pip check`, and the short real-model checks in [verification](verification.md).
+To change the pinned `mlx-audio` version, update `pyproject.toml`, then regenerate the lock. `doctor` reads the expected version and diagnostic hint from that declaration; installed packages without the source checkout use the generated package dependency metadata. No version number needs updating in Python code. The model-free CLI tests cover future pin changes, stale installed versions, and both source and installed-package use. Review the adapter, upstream compatibility, and licenses. For speech changes, also run `sh setup.sh mlx`, `uv pip check`, and the short real-model checks in [verification](verification.md).
 
 Dependabot proposes monthly updates for GitHub Actions and the uv ecosystem; it does not merge changes or publish anything automatically.
 

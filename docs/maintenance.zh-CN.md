@@ -38,7 +38,7 @@ sh setup.sh core
 .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
 ```
 
-修改锁定的 `mlx-audio` 版本时，先更新 `pyproject.toml`，再重新生成锁文件，并同步 `raradio/cli.py` 中的预期版本与诊断提示。无模型 CLI 测试会检查 `doctor` 是否接受 `pyproject.toml` 声明的版本。还需复核适配器、上游兼容性和许可证。涉及语音的改动还需运行 `sh setup.sh mlx`、`uv pip check`，并按[测试与验证](verification.zh-CN.md)完成真实短样。
+修改锁定的 `mlx-audio` 版本时，更新 `pyproject.toml`，再重新生成锁文件。`doctor` 从该声明读取预期版本并生成诊断提示；没有源码检出的已安装包使用构建生成的包依赖元数据。无需再修改 Python 代码中的版本号。无模型 CLI 测试覆盖后续版本升级、已安装版本过旧，以及源码和已安装包两种运行方式。还需复核适配器、上游兼容性和许可证。涉及语音的改动还需运行 `sh setup.sh mlx`、`uv pip check`，并按[测试与验证](verification.zh-CN.md)完成真实短样。
 
 Dependabot 每月提出 GitHub Actions 与 uv 生态更新，不会自动合并或发布任何内容。
 
