@@ -9,7 +9,7 @@ Only tagged releases receive version headings and dates. The application current
 - Renamed the unpublished project, Python package, module, CLI, and bundled Skill from Rara to raradio.
 - Standardized project metadata, GitHub links, and source-checkout installation guidance.
 - Added a read-only `raradio setup` onboarding check and separate bilingual installation guides centered on the Ollama-free single-voice path.
-- Corrected the MLX dependency check to accept the pinned MLX-Audio 0.5.6 release; current-version guidance now points to the dependency declaration instead of repeating a version number.
+- Derive the MLX dependency check and diagnostic hint from the declared dependency pin, including installed-package metadata when no source checkout is present. Dependency upgrades no longer require a matching Python code edit; missing or invalid pin metadata fails the MLX preflight with JSON diagnostics.
 
 ### Manuscript ingestion and review
 

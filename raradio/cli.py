@@ -5,9 +5,11 @@ import importlib.metadata
 import json
 import math
 import platform
+import re
 import shutil
 import sqlite3
 import sys
+import tomllib
 from contextlib import redirect_stdout
 from http.client import HTTPException
 from importlib.resources import files
@@ -86,6 +88,35 @@ def _configure(project, filename):
     project.configure(json.loads(path.read_text(encoding="utf-8")), base_dir=path.parent)
 
 
+def _pinned_mlx_audio_version():
+    """Read the authored pin in a checkout, or its generated installed metadata."""
+    pyproject = Path(__file__).resolve().parents[1] / "pyproject.toml"
+    try:
+        project = tomllib.loads(pyproject.read_text(encoding="utf-8")).get("project", {})
+    except FileNotFoundError:
+        project = {}
+    if not isinstance(project, dict):
+        raise ValueError("Expected a project table in pyproject.toml")
+    # Prefer current source over potentially stale editable-install metadata.
+    if project.get("name") == "raradio":
+        requirements = project["optional-dependencies"]["mlx"]
+    else:
+        requirements = importlib.metadata.requires("raradio") or []
+    if not isinstance(requirements, list) or any(not isinstance(item, str) for item in requirements):
+        raise ValueError("Expected a list of dependency strings in raradio metadata")
+    # This project requires one exact pin, not a range or wildcard. Markers
+    # select installation platforms; doctor checks the platform separately.
+    pins = []
+    for requirement in requirements:
+        match = re.fullmatch(r"mlx[-_.]audio(?:\[[^\]]+\])?\s*==\s*([A-Za-z0-9][A-Za-z0-9.!+_-]*)",
+                             requirement.split(";", 1)[0].strip(), re.IGNORECASE)
+        if match:
+            pins.append(match.group(1))
+    if len(pins) != 1:
+        raise ValueError("Expected one exact mlx-audio version pin in raradio dependency metadata")
+    return pins[0]
+
+
 def _doctor(profile="core", base_url="http://localhost:11434", model="qwen3:14b"):
     """Check selected prerequisites without loading or downloading models."""
     data = {"version": __version__, "profile": profile,
@@ -119,12 +150,19 @@ def _doctor(profile="core", base_url="http://localhost:11434", model="qwen3:14b"
                      and bool(macos) and int(macos.split(".")[0]) >= 14)
         check("mlx_platform", supported, f"{data['platform']} {macos} {data['architecture']}",
               "Use an Apple Silicon Mac with macOS 14 or later and Metal GPU access; core workflows also work on Linux.")
-        mlx_hint = (
-            "From the raradio source checkout run `sh setup.sh mlx`. Expected mlx-audio 0.5.7."
-            if supported else
-            "MLX speech is only supported on the platform described by the mlx_platform check."
-        )
-        check("mlx_audio", data["mlx_audio"] == "0.5.7", data["mlx_audio"],
+        try:
+            expected = _pinned_mlx_audio_version()
+        except (OSError, ValueError, KeyError, TypeError, importlib.metadata.PackageNotFoundError) as exc:
+            expected = None
+            mlx_hint = (f"Cannot determine the pinned mlx-audio version: {exc}. "
+                        "Restore raradio's dependency metadata and run `sh setup.sh mlx` from the source checkout.")
+        else:
+            mlx_hint = (
+                f"From the raradio source checkout run `sh setup.sh mlx`. Expected mlx-audio {expected}."
+                if supported else
+                "MLX speech is only supported on the platform described by the mlx_platform check."
+            )
+        check("mlx_audio", expected is not None and data["mlx_audio"] == expected, data["mlx_audio"],
               mlx_hint)
     elif profile == "ollama":
         try:
