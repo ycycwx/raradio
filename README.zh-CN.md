@@ -39,7 +39,7 @@ sh run.sh setup --mode multi-voice
 
 `sh run.sh setup` 只检查并解释前置条件，不会自行安装软件或下载模型。目前唯一支持的分发和安装方式是使用仓库源码。
 
-完整的首个单人样例、下载内容、更新和 Ollama 准备方式见[安装指南](https://github.com/ycycwx/raradio/blob/main/docs/installation.zh-CN.md)。如果只想在不下载语音模型的情况下验证完整流程，请运行[无模型示例](https://github.com/ycycwx/raradio/blob/main/examples/README.zh-CN.md#demo无需模型的端到端冒烟测试)。
+完整的首个单人样例、下载内容、更新和 Ollama 准备方式见[安装指南](https://github.com/ycycwx/raradio/blob/main/docs/installation.zh-CN.md)。如果只想在不下载语音模型的情况下验证完整流程，请运行[无模型示例](https://github.com/ycycwx/raradio/blob/main/examples/README.zh-CN.md#1-双章节诊断)。
 
 ## 配合你已有的 Agent
 
@@ -109,7 +109,7 @@ llama.cpp 属于候选后端，当前未接入。后端接口、已实现能力�
 python3 -W error::ResourceWarning -m unittest discover -s tests -v
 ```
 
-版本调整、依赖更新、项目格式兼容性和源码更新检查见 [维护指南](https://github.com/ycycwx/raradio/blob/main/docs/maintenance.zh-CN.md) 与 [更新记录](https://github.com/ycycwx/raradio/blob/main/CHANGELOG.zh-CN.md)。[开源审查](https://github.com/ycycwx/raradio/blob/main/docs/open-source-review.zh-CN.md) 记录当前不足和后续优先级。
+版本调整、依赖更新、项目格式兼容性、迁移说明和源码更新检查见 [维护指南](https://github.com/ycycwx/raradio/blob/main/docs/maintenance.zh-CN.md)。[开源审查](https://github.com/ycycwx/raradio/blob/main/docs/open-source-review.zh-CN.md) 记录当前不足和后续优先级。
 
 提交问题或改动前请阅读 [贡献指南](https://github.com/ycycwx/raradio/blob/main/CONTRIBUTING.zh-CN.md)。复现材料使用原创短文和可公开的配置，避免附带个人书籍、录音或凭据。
 

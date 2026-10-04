@@ -21,7 +21,7 @@ sh run.sh setup
 
 `setup.sh mlx` 会把锁定的 Python 3.11 语音依赖安装进 `.venv`。`sh run.sh setup` 是只读的解释和验证步骤，不会自行安装软件或下载模型。在仓库根目录继续使用 `sh run.sh ...`；从其他目录调用时使用 `sh /path/to/raradio/run.sh ...`。
 
-以后更新时，请保留工作目录和本地配置，更新源码仓库，再运行 `sh setup.sh mlx`。Alpha 阶段使用新版本处理已有书籍项目前，应先查看更新记录。
+以后更新时，请保留工作目录和本地配置，更新源码仓库，再运行 `sh setup.sh mlx`。Alpha 阶段使用新版本处理已有书籍项目前，应先查看[兼容性与迁移说明](maintenance.zh-CN.md#兼容性与迁移说明)。
 
 ## 生成第一个单人朗读样例
 

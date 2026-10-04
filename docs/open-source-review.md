@@ -17,7 +17,7 @@ The useful distinction is the emphasis on revising a production project through 
 | First run | README leads with an explicit goal and separates diagnostic tones, real speech, and character analysis. The source setup prepares Python and locked dependencies through uv. |
 | Environment diagnosis | `doctor` now defaults to offline core checks. MLX and Ollama profiles report selected prerequisites, corrective hints, and a nonzero exit status when those checks fail. No inference-readiness claim is made. |
 | Automation | `run.sh` preserves the caller's current directory. Invalid numeric flags are rejected before creating a project; expected corrupt-project errors are concise. Limited runs invalidate all stale completed audio before reporting remaining work, and malformed Ollama URLs produce actionable errors. |
-| Versions | Project metadata and `--version` share `raradio.__version__`. A changelog and maintenance policy distinguish software versions, project schema, dependency locks, and model revisions. |
+| Versions | Project metadata and `--version` share `raradio.__version__`. The maintenance guide distinguishes software versions, project schema, dependency locks, and model revisions, and records compatibility and migration guidance. |
 | Installation and source workflow | Setup rejects unsupported MLX hardware/macOS before dependency resolution. CI checks the locked source environment on macOS and Linux; an optional job checks MLX dependency installation. |
 | Maintenance | Dependency-update PRs and a manually triggered MLX installation and dependency consistency check are configured. Model inference remains a separate validation step. |
 

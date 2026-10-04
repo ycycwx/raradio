@@ -39,7 +39,7 @@ sh run.sh setup --mode multi-voice
 
 `sh run.sh setup` checks and explains prerequisites; it never installs software or downloads models. The repository checkout is currently the only supported distribution and installation path.
 
-Follow the [installation guide](https://github.com/ycycwx/raradio/blob/main/docs/installation.md) for the first single-voice sample, downloads, updates, and Ollama setup. To verify the complete workflow without speech models, use the [model-free example](https://github.com/ycycwx/raradio/blob/main/examples/README.md#demo-model-free-end-to-end-smoke-test).
+Follow the [installation guide](https://github.com/ycycwx/raradio/blob/main/docs/installation.md) for the first single-voice sample, downloads, updates, and Ollama setup. To verify the complete workflow without speech models, use the [model-free example](https://github.com/ycycwx/raradio/blob/main/examples/README.md#1-two-chapter-diagnostic).
 
 ## Use with your existing agent
 
@@ -109,7 +109,7 @@ Tests do not require model downloads:
 python3 -W error::ResourceWarning -m unittest discover -s tests -v
 ```
 
-For version changes, dependency updates, project-format compatibility, and source-update checks, see [maintenance](https://github.com/ycycwx/raradio/blob/main/docs/maintenance.md) and the [changelog](https://github.com/ycycwx/raradio/blob/main/CHANGELOG.md). The [open-source review](https://github.com/ycycwx/raradio/blob/main/docs/open-source-review.md) records current gaps and follow-up priorities.
+For version changes, dependency updates, project-format compatibility, migration guidance, and source-update checks, see [maintenance](https://github.com/ycycwx/raradio/blob/main/docs/maintenance.md). The [open-source review](https://github.com/ycycwx/raradio/blob/main/docs/open-source-review.md) records current gaps and follow-up priorities.
 
 Read the [contribution guide](https://github.com/ycycwx/raradio/blob/main/CONTRIBUTING.md) before reporting an issue or submitting a change. Use original short texts and configurations that can be shared publicly for reproductions; avoid including personal books, recordings, or credentials.
 

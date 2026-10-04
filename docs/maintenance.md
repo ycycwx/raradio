@@ -48,12 +48,19 @@ Dependabot proposes monthly updates for GitHub Actions and the uv ecosystem; it 
 
 Book projects have their own `schema_version`. raradio rejects unsupported schemas and has no automatic migration yet. Before changing the schema, provide an explicit migration path or state that users need a new work directory. Back up an existing project before trying a newer Alpha revision.
 
+## Compatibility and migration notes
+
+Source updates do not require a formal release or a separate changelog. Git history records routine dependency updates, fixes, and internal refactoring.
+
+When an update requires users to change commands, configuration, models, or their environment, or affects existing book projects, add a concise note here in both languages. Identify the affected versions or commits, explain the impact, and give the required update or migration steps. Keep installation and usage instructions aligned with the new behavior.
+
+Before updating an existing book project, back up its work directory and local configuration. Check any applicable notes here before running the updated CLI; unsupported project schemas currently require an explicit migration procedure or a new work directory.
+
 ## Source update checklist
 
-1. Update both changelogs for behavior, schema, dependency, model, or platform changes.
+1. Update relevant documentation in both languages. Add compatibility or migration notes above when users need to take action or existing projects are affected; routine changes need only a clear Git commit description.
 2. Run `uv lock --check`, all model-free tests, shell syntax checks, and `git diff --check`.
 3. Run the public model-free example from a clean checkout. If speech code changed, separately verify a short real sample on supported hardware.
 4. Inspect tracked files for credentials, personal paths, books, recordings, model weights, generated audio, databases, and environments.
-5. Create a Git tag or GitHub Release only after the exact commit has passed the intended checks. No package registry publication is part of this process.
 
-The current changelog is **Unreleased**. Keep planned CI coverage separate from recorded local or hosted evidence.
+Keep planned CI coverage separate from recorded local or hosted evidence. No Git tag, GitHub Release, or package registry publication is required for this source-update workflow.

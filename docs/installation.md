@@ -21,7 +21,7 @@ sh run.sh setup
 
 `setup.sh mlx` installs the locked Python 3.11 speech dependencies into `.venv`. `sh run.sh setup` is a read-only explanation and verification step; it does not install software or download models. Keep using `sh run.sh ...` from the repository root, or `sh /path/to/raradio/run.sh ...` elsewhere.
 
-To update later, preserve any work directories and local configuration, update the checkout, then rerun `sh setup.sh mlx`. Review the changelog before using a newer Alpha revision with an existing book project.
+To update later, preserve any work directories and local configuration, update the checkout, then rerun `sh setup.sh mlx`. Review the [compatibility and migration guidance](maintenance.md#compatibility-and-migration-notes) before using a newer Alpha revision with an existing book project.
 
 ## Make a first single-voice sample
 
