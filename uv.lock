@@ -365,7 +365,7 @@ wheels = [
 
 [[package]]
 name = "mlx-audio"
-version = "0.6.3"
+version = "0.6.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "huggingface-hub" },
@@ -381,9 +381,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "transformers", extra = ["chat-template"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/bb/b7948154fce2ed21c0184407ccdec85ee91f44b4d41c91a625a2877ccaf8/mlx_audio-0.6.3.tar.gz", hash = "sha256:bed9a2801a4d500fd007b046bd0209ddcbe2cb0528a648ee7891486b30909df6", size = 2053047, upload-time = "2026-10-28T17:47:32.284Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cb/be/1b47eb8f6d8da84ea3f5a1e5257195ba11f1e90af22754fb698393dad1f9/mlx_audio-0.6.4.tar.gz", hash = "sha256:092dee1f010846cee76b164a988ad9802e45d4c79771d65d55ceb9de246fab4b", size = 2136887, upload-time = "2026-11-02T17:24:56.815Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b9/0a/5c948ee1445dcee873335e4821d91188547160e5fd2928400da54950c03a/mlx_audio-0.6.3-py3-none-any.whl", hash = "sha256:2cfaef542f29c0eb0f58bb3823eafbb9acf9df9b01a7f45a9bbf3b4b5d44dab9", size = 2464723, upload-time = "2026-10-28T17:47:30.589Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/8d/4b8ced39134bd2e79f1a3514caac7a52f884b83aabb41b3020cb47312d4f/mlx_audio-0.6.4-py3-none-any.whl", hash = "sha256:ec5379833fb0d4aacf2cfd681ee3a35f9ca4c0fdbac47022d6e934572763f7c1", size = 2567536, upload-time = "2026-11-02T17:24:54.77Z" },
 ]
 
 [package.optional-dependencies]
@@ -584,7 +584,7 @@ mlx = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "mlx-audio", extras = ["tts"], marker = "platform_machine == 'arm64' and sys_platform == 'darwin' and extra == 'mlx'", specifier = "==0.6.3" }]
+requires-dist = [{ name = "mlx-audio", extras = ["tts"], marker = "platform_machine == 'arm64' and sys_platform == 'darwin' and extra == 'mlx'", specifier = "==0.6.4" }]
 provides-extras = ["mlx"]
 
 [[package]]
