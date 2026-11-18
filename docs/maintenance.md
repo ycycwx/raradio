@@ -42,6 +42,24 @@ To change the pinned `mlx-audio` version, update `pyproject.toml`, then regenera
 
 Dependabot proposes monthly updates for GitHub Actions and the uv ecosystem; it does not merge changes or publish anything automatically.
 
+## CI coverage and manual checks
+
+Pull requests and pushes to `main` run all eight core combinations: Linux/macOS with Python 3.11–3.14. Other branch pushes do not trigger a second run. Each core job checks the lockfile, installs the core environment, checks dependency consistency, runs all model-free tests, and checks shell syntax.
+
+To run the full core matrix manually on a branch:
+
+```sh
+gh workflow run checks.yml --ref BRANCH
+```
+
+For an MLX dependency update, run the installation check on the PR branch separately:
+
+```sh
+gh workflow run checks.yml --ref BRANCH -f check_mlx=true
+```
+
+Replace `BRANCH` with the branch name. Selecting `check_mlx` runs only the Apple Silicon MLX installation and dependency consistency check; it skips the core matrix. This check downloads no models and does not establish speech quality. Manual runs use the workflow definition on the selected branch, so the branch must contain these trigger changes for MLX-only behavior.
+
 ## Version and project-format policy
 
 `raradio/__init__.py::__version__` is the single authored application version. The CLI reports it, and the uv cache key includes the file. Use `0.MINOR.PATCH` during Alpha: compatible fixes increment patch; intentional CLI, JSON, cast, or project-format breaks increment minor and require explicit notes.

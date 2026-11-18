@@ -52,7 +52,7 @@ PR 说明应包括改变的行为、验证方式与尚未验证的平台或模�
 
 `tests/test_examples.py` 实际运行公开的离线教学脚本；`tests/test_example_templates.py` 使用公开 TXT 和 cast 模板，验证导入、合成契约、章节导出与缓存。修改示例时保持“准备材料、人工步骤、实际命令、预期输出”四项完整，不能只验证 JSON 可以解析。克隆模板的参考录音在测试中临时生成，模型推理被替换；这不证明克隆质量。
 
-GitHub Actions 在 macOS/Linux、Python 3.11–3.14 上检查锁定的核心源码环境。手动选择的 MLX 任务检查 Apple Silicon 上的可选依赖安装与一致性；不下载模型，也不验证语音质量。依赖更新、版本规则与源码更新检查见[维护指南](docs/maintenance.zh-CN.md)。
+GitHub Actions 为拉取请求与推送到 `main` 的提交，在 macOS/Linux、Python 3.11–3.14 上检查锁定的核心源码环境。分支推送不会重复触发检查。手动运行默认检查同一套核心矩阵；勾选 `check_mlx` 后，只检查 Apple Silicon 上的可选依赖安装与一致性，不下载模型，也不验证语音质量。手动 CI 命令、依赖更新、版本规则与源码更新检查见[维护指南](docs/maintenance.zh-CN.md)。
 
 个人输入、参考录音和临时配置放在被忽略的 `work/`、`output/` 或 `configs/`。生成的媒体、模型文件和凭据默认不提交。确需加入公开测试素材时，先明确来源与许可，再有意调整忽略及打包规则。
 

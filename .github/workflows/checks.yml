@@ -2,11 +2,12 @@ name: Checks
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
     inputs:
       check_mlx:
-        description: Install locked MLX packages on Apple Silicon (no model download)
+        description: Run only the MLX package installation check on Apple Silicon (no models)
         type: boolean
         default: false
 
@@ -16,6 +17,7 @@ permissions:
 jobs:
   core:
     name: Core (${{ matrix.os }}, Python ${{ matrix.python }})
+    if: github.event_name != 'workflow_dispatch' || !inputs.check_mlx
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:

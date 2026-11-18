@@ -42,6 +42,24 @@ sh setup.sh core
 
 Dependabot 每月提出 GitHub Actions 与 uv 生态更新，不会自动合并或发布任何内容。
 
+## CI 覆盖与手动检查
+
+拉取请求与推送到 `main` 的提交运行全部八种核心组合：Linux/macOS 与 Python 3.11–3.14。其他分支的推送不会再触发一轮检查。每个核心任务都会检查锁文件、安装核心环境、检查依赖一致性、运行全部无模型测试，并检查 Shell 语法。
+
+在指定分支上手动运行完整核心矩阵：
+
+```sh
+gh workflow run checks.yml --ref BRANCH
+```
+
+更新 MLX 依赖时，在 PR 分支上单独运行安装检查：
+
+```sh
+gh workflow run checks.yml --ref BRANCH -f check_mlx=true
+```
+
+将 `BRANCH` 替换为分支名。勾选 `check_mlx` 后，只运行 Apple Silicon 上的 MLX 安装与依赖一致性检查，跳过核心矩阵。此检查不下载模型，也不能证明语音质量。手动运行使用所选分支上的工作流定义，因此该分支必须包含这些触发规则改动，才能只运行 MLX 检查。
+
 ## 版本与项目格式规则
 
 `raradio/__init__.py::__version__` 是唯一手写的应用版本，CLI 会报告它，uv 缓存键也包含该文件。Alpha 阶段使用 `0.MINOR.PATCH`：兼容修复增加 patch；有意破坏 CLI、JSON、cast 或项目格式时增加 minor，并明确记录。
