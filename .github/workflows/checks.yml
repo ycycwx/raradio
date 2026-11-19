@@ -19,33 +19,45 @@ jobs:
     name: Core (${{ matrix.os }}, Python ${{ matrix.python }})
     if: github.event_name != 'workflow_dispatch' || !inputs.check_mlx
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: ${{ matrix.timeout || 10 }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
         python: ["3.11", "3.12", "3.13", "3.14"]
-    env:
-      UV_PYTHON: ${{ matrix.python }}
+        include:
+          - os: macos-latest
+            python: "3.11–3.14"
+            timeout: 40
+            versions: |-
+              3.11
+              3.12
+              3.13
+              3.14
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.versions || matrix.python }}
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: "0.13.9"
-      - name: Install core from the committed lockfile
+      - name: Check the locked core environment and run model-free tests
+        env:
+          PYTHON_VERSIONS: ${{ matrix.versions || matrix.python }}
         run: |
-          uv lock --check
-          sh setup.sh core
-          uv pip check
-      - name: Standard-library tests (no models or optional dependencies)
-        run: .venv/bin/python -W error::ResourceWarning -m unittest discover -s tests -v
-      - name: Shell syntax
-        run: sh -n setup.sh run.sh
+          result=0
+          for version in $PYTHON_VERSIONS; do
+            echo "::group::Core checks for Python $version"
+            if ! UV_PYTHON="$version" sh .github/scripts/check-core.sh; then
+              echo "::error::Core checks failed for Python $version"
+              result=1
+            fi
+            echo "::endgroup::"
+          done
+          exit "$result"
 
   mlx-install:
     name: Optional MLX package installation (no models)

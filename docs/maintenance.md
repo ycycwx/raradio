@@ -44,7 +44,7 @@ Dependabot proposes monthly updates for GitHub Actions and the uv ecosystem; it 
 
 ## CI coverage and manual checks
 
-Pull requests and pushes to `main` run all eight core combinations: Linux/macOS with Python 3.11–3.14. Other branch pushes do not trigger a second run. Each core job checks the lockfile, installs the core environment, checks dependency consistency, runs all model-free tests, and checks shell syntax.
+Pull requests and pushes to `main` check Python 3.11–3.14 on both Linux and macOS. The four Linux jobs run in parallel. One macOS runner checks all four versions in sequence to reduce demand for hosted ARM64 machines. For each version, CI checks the lockfile, installs the core environment, verifies the interpreter and dependencies, runs all model-free tests, and checks shell syntax. A failed version is reported in the log and fails the job after the remaining versions have run.
 
 To run the full core matrix manually on a branch:
 
